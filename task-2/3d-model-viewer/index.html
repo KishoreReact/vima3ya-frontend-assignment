@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VOID · 3D Model Viewer</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%234f8ef7'/></svg>" />
+    <link rel="stylesheet" href="/src/styles/main.css" />
+  </head>
+  <body>
+    <div id="app">
+      <!-- Loading screen -->
+      <div id="loader" class="loader-overlay">
+        <div class="loader-content">
+          <div class="loader-orb">
+            <div class="orb-ring ring-1"></div>
+            <div class="orb-ring ring-2"></div>
+            <div class="orb-ring ring-3"></div>
+            <div class="orb-core"></div>
+          </div>
+          <div class="loader-text">
+            <span class="loader-label">INITIALIZING</span>
+            <div class="loader-progress-track">
+              <div class="loader-progress-bar" id="progressBar"></div>
+            </div>
+            <span class="loader-percent" id="progressText">0%</span>
+          </div>
+          <p class="loader-sub">Lazy-loading Three.js + DRACOLoader</p>
+        </div>
+      </div>
+
+      <!-- Header -->
+      <header class="site-header">
+        <div class="header-left">
+          <div class="logo-mark">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <polygon points="14,2 26,21 2,21" stroke="#4f8ef7" stroke-width="1.5" fill="none"/>
+              <circle cx="14" cy="14" r="5" fill="#a855f7" opacity="0.8"/>
+            </svg>
+          </div>
+          <span class="logo-text">VOID<sup>3D</sup></span>
+        </div>
+        <nav class="header-nav">
+          <span class="nav-tag">GLB Viewer</span>
+          <span class="nav-divider">·</span>
+          <span class="nav-tag">Draco Compressed</span>
+        </nav>
+      </header>
+
+      <!-- Canvas container -->
+      <main class="canvas-container" id="canvasContainer">
+        <canvas id="threeCanvas"></canvas>
+
+        <!-- Scanline overlay -->
+        <div class="scanlines"></div>
+
+        <!-- Corner decorations -->
+        <div class="corner corner-tl"></div>
+        <div class="corner corner-tr"></div>
+        <div class="corner corner-bl"></div>
+        <div class="corner corner-br"></div>
+      </main>
+
+      <!-- Side panel -->
+      <aside class="side-panel" id="sidePanel">
+        <div class="panel-section">
+          <h3 class="panel-heading">MODEL INFO</h3>
+          <div class="stat-row">
+            <span class="stat-label">File</span>
+            <span class="stat-value" id="statFile">model-compressed.glb</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Size</span>
+            <span class="stat-value accent" id="statSize">6.5 KB</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Original</span>
+            <span class="stat-value muted">9.1 KB</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Savings</span>
+            <span class="stat-value green">−29%</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Compression</span>
+            <span class="stat-value">Draco v1.5.6</span>
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <h3 class="panel-heading">PERFORMANCE</h3>
+          <div class="stat-row">
+            <span class="stat-label">Load Time</span>
+            <span class="stat-value accent" id="statLoadTime">—</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">FPS</span>
+            <span class="stat-value green" id="statFPS">—</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Meshes</span>
+            <span class="stat-value" id="statMeshes">7</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Three.js</span>
+            <span class="stat-value">Lazy Import</span>
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <h3 class="panel-heading">CONTROLS</h3>
+          <div class="control-row">
+            <kbd>Drag</kbd>
+            <span>Orbit model</span>
+          </div>
+          <div class="control-row">
+            <kbd>Scroll</kbd>
+            <span>Zoom in/out</span>
+          </div>
+          <div class="control-row">
+            <kbd>Right click</kbd>
+            <span>Pan view</span>
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <h3 class="panel-heading">SETTINGS</h3>
+          <label class="toggle-row">
+            <span>Auto-rotate</span>
+            <div class="toggle" id="toggleRotate">
+              <div class="toggle-knob active"></div>
+            </div>
+          </label>
+          <label class="toggle-row">
+            <span>Wireframe</span>
+            <div class="toggle" id="toggleWire">
+              <div class="toggle-knob"></div>
+            </div>
+          </label>
+          <label class="toggle-row">
+            <span>Environment</span>
+            <div class="toggle" id="toggleEnv">
+              <div class="toggle-knob active"></div>
+            </div>
+          </label>
+        </div>
+
+        <div class="panel-footer">
+          <span class="badge">THREE.js r169</span>
+          <span class="badge">WebGL 2</span>
+        </div>
+      </aside>
+
+      <!-- Bottom bar -->
+      <footer class="bottom-bar">
+        <div class="console-log" id="consoleLog">
+          <span class="console-prefix">▶</span>
+          <span id="consoleText">Awaiting Three.js dynamic import…</span>
+        </div>
+      </footer>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
